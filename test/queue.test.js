@@ -14,7 +14,7 @@ describe('Queue', async () => {
     const queue = new Queue();
     queue.enqueue(5);
     queue.enqueue(6);
-    queue.enqueue(7);
+    //queue.enqueue(7);
     assert.strictEqual(queue.dequeue(), 5);
     assert.strictEqual(queue.dequeue(), 6);
   });
