@@ -65,20 +65,73 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    return deleteNode(this.rootElement, data);
+    this.rootElement = deleteNode(this.rootElement, data);
 
     function deleteNode(node, data) {
       if (node === null) return null;
-      if (node.data < data) return (node.right = deleteNode(node.right, data));
-      if (node.data > data) return (node.left = deleteNode(node.left, data));
+      if (node.data < data) {
+        node.right = deleteNode(node.right, data);
+        return node;
+      }
+      if (node.data > data) {
+        node.left = deleteNode(node.left, data);
+        return node;
+      }
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+      if (node.left === null) {
+        node = node.right;
+        return node;
+      }
+      if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      const minElement = findMinElement(node.right);
+      node.data = minElement.data;
+      node.right = deleteNode(node.right, minElement.data);
+      return node;
+    }
+
+    function findMinElement(node) {
+      if (node === null) return null;
+      if (node.left === null) {
+        return node;
+      } else {
+        return findMinElement(node.left);
+      }
     }
   }
+
   min() {
-    console.log("test");
+    const minElement = findMinElement(this.rootElement);
+
+    function findMinElement(node) {
+      if (node === null) return null;
+      if (node.left === null) {
+        return node;
+      } else {
+        return findMinElement(node.left);
+      }
+    }
+    return minElement.data;
   }
 
   max() {
-    console.log("test");
+    const maxElement = findMaxElement(this.rootElement);
+
+    function findMaxElement(node) {
+      if (node === null) return null;
+      if (node.right === null) {
+        return node;
+      } else {
+        return findMaxElement(node.right);
+      }
+    }
+    return maxElement.data;
   }
 }
 
